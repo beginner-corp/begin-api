@@ -10,7 +10,7 @@ import test from 'tape'
 import { App } from '../client.js'
 
 let access_token = process.env.ACCESS_TOKEN
-let timeout = 120000 
+let timeout = 150000 
 let app 
 
 test('App', t => {
@@ -46,13 +46,12 @@ test('create an app', async t=> {
   console.log(app)
 })
 
-
 test('look for 200', { timeout }, async t=> {
   t.plan(1)
   let check = await new Promise((res, rej) => {
     setTimeout(function() {
       App.find({ access_token, appID: app.appID}).then(res).catch(rej)
-    }, 106000)
+    }, 120000)
   })
   await tiny.get({ url: check.url })
   t.pass('got 200')
