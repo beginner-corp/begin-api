@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 let test = require('tape')
-let App = require('../')
+let { App } = require('../')
 
 let access_token = process.env.ACCESS_TOKEN
 let timeout = 120000 

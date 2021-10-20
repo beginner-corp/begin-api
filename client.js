@@ -1,8 +1,6 @@
 // @ts-check
 let tiny = require('tiny-json-http')
 
-module.exports = App
-
 class App {
 
   static async create ({ access_token, name, zip }) {
@@ -235,3 +233,5 @@ async function write ({ access_token, appID, path, params }) {
     return e.body
   }
 }
+
+module.exports = { App }
