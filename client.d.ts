@@ -108,6 +108,10 @@ export declare class App<App> {
   /**
    * ```javascript
    * let { env } = await app.env.get();
+   *
+   * await app.env.set({ key: "MY_VAR", value: "henlo" });
+   *
+   * await app.env.set({ key: "MY_VAR", value: "henlo" });
    * ```
    */
   env: Env;
