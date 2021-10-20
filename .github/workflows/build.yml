@@ -37,7 +37,7 @@ jobs:
       run: npm install
 
     - name: Test
-      run: npm test
+      run: ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} npm test
 
     - name: Notify
       uses: homoluctus/slatify@master
