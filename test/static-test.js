@@ -1,10 +1,7 @@
 require('dotenv').config()
 
-let tiny = require('tiny-json-http')
-let path = require('path')
-let fs = require('fs')
 let test = require('tape')
-let App = require('../../src/client')
+let App = require('../')
 
 let access_token = process.env.ACCESS_TOKEN
 let timeout = 120000 

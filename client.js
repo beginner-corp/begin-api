@@ -1,12 +1,10 @@
-/* eslint-disable fp/no-class */
+// @ts-check
 let tiny = require('tiny-json-http')
 
-/**
- * @typedef { import("./client.d.ts").App } App
- */
-module.exports = class App {
+module.exports = App
 
-  // let app = await App.create({ access_token, name, zip })
+class App {
+
   static async create ({ access_token, name, zip }) {
     if (!name) throw ReferenceError('missing_name')
     if (!zip) throw ReferenceError('missing_zip')
@@ -20,7 +18,6 @@ module.exports = class App {
     return new App({ access_token, ...result })
   }
 
-  // let app = await App.find({ access_token, appID })
   static async find ({ access_token, appID }) {
     if (!access_token) throw ReferenceError('missing_access_token')
     if (!appID) throw ReferenceError('missing_appID')
@@ -28,18 +25,12 @@ module.exports = class App {
     return new App({ access_token, ...record })
   }
 
-  // let { apps } = await App.list({ access_token })
   static async list ({ access_token }) {
     if (!access_token) throw ReferenceError('missing_access_token')
     let { apps } = await read({ access_token })
     return apps.map(app => new App({ access_token, ...app }))
   }
 
-  //
-  // instance methods
-  //
-  // let app = new App({ access_token, appID, name, url })
-  //
   constructor ({ access_token, appID, name, url }) {
     if (!access_token) throw ReferenceError('missing_access_token')
     if (!appID) throw ReferenceError('missing_appID')
@@ -55,7 +46,7 @@ module.exports = class App {
   //
   // instance reads
   //
-  // let builds = await app.builds()
+
   async builds () {
     let access_token = this.access_token
     let appID = this.appID

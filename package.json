@@ -1,0 +1,36 @@
+{
+  "name": "@begin/api",
+  "version": "1.0.0",
+  "description": "Node client for api.begin.com",
+  "main": "client.js",
+  "scripts": {
+    "tsc":"tsc",
+    "docs": "typedoc",
+    "test": "tape test/* | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beginner-corp/begin-api.git"
+  },
+  "keywords": [
+    "node",
+    "fwa",
+    "begin"
+  ],
+  "author": "Brian LeRoux <brian@begin.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/beginner-corp/begin-api/issues"
+  },
+  "homepage": "https://github.com/beginner-corp/begin-api#readme",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.3.1",
+    "typescript": "^4.4.4",
+    "typedoc": "^0.22.6"
+  },
+  "dependencies": {
+    "tiny-json-http": "^7.3.1"
+  }
+}
