@@ -1,10 +1,13 @@
-require('dotenv').config()
+import * as e from 'dotenv'
 
-let tiny = require('tiny-json-http')
-let path = require('path')
-let fs = require('fs')
-let test = require('tape')
-let { App } = require('../')
+e.config()
+
+import * as tiny from 'tiny-json-http'
+import path from 'path'
+import fs from 'fs'
+import test from 'tape'
+
+import { App } from '../client.js'
 
 let access_token = process.env.ACCESS_TOKEN
 let timeout = 120000 
@@ -34,6 +37,8 @@ test('get a list of apps', async t=> {
 test('create an app', async t=> {
   t.plan(1)
   let name = 'example app'
+  let __filename = '/client-test.js'
+  let __dirname = import.meta.url.replace('file:', '').replace(__filename, '')
   let pathToMockZip = path.join(__dirname, 'arc-basic.zip')
   let zip = fs.readFileSync(pathToMockZip).toString('base64')
   app = await App.create({ access_token, name:'my cool app', zip })
