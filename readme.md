@@ -11,13 +11,13 @@ npm i @begin/api
 ## ESM
 
 ```javascript
-import App from '@begin/api'
+import { App } from '@begin/api'
 ```
 
 ## CJS
 
 ```javascript
-let { App } = require('@begin/api')
+const { App } = require('@begin/api')
 ```
 
 # Usage
@@ -26,7 +26,7 @@ let { App } = require('@begin/api')
 
 ```javascript
 // list apps
-let { apps } = await Apps.list()
+let { apps } = await App.list()
 
 // find an app by id
 let app = await App.find({ access_token, appID })
