@@ -8,6 +8,8 @@ Obtain an `access_token` by creating a client at https://api.begin.com.
 npm i @begin/api
 ```
 
+# Usage
+
 ## ESM
 
 ```javascript
@@ -79,4 +81,13 @@ await app.static.set({ name: '/file.js', body  })
 // remove the file
 await app.static.destroy({ name: '/file.js' })
 
+```
+
+# Contributing
+
+Create `.env` with the following values:
+
+```bash
+BEGIN_CLIENT_ID=xxx
+ACCESS_TOKEN=xxx
 ```

@@ -11,7 +11,7 @@ import { App } from '../client.js'
 
 let access_token = process.env.ACCESS_TOKEN
 let timeout = 150000 
-let app 
+let app // used later 
 
 test('App', t => {
   t.plan(4)
@@ -22,13 +22,14 @@ test('App', t => {
   console.log(App)
 })
 
+/*
 test('get a list of apps', async t=> {
   t.plan(1)
   let apps = await App.list({ access_token })
   t.ok(apps.length > 0, 'has apps')
   app = apps[0]
   console.log(apps, apps.length)
-})
+})*/
 
 //
 // working with an instance
@@ -48,10 +49,11 @@ test('create an app', async t=> {
 
 test('look for 200', { timeout }, async t=> {
   t.plan(1)
+  let delay = 1000*2 // prev value: 120000
   let check = await new Promise((res, rej) => {
     setTimeout(function() {
       App.find({ access_token, appID: app.appID}).then(res).catch(rej)
-    }, 120000)
+    }, delay)
   })
   await tiny.get({ url: check.url })
   t.pass('got 200')
@@ -104,15 +106,6 @@ test('deploy new name', async t=> {
 
 test('destroy the app', { timeout }, async t=> {
   t.plan(1)
-  let check = await new Promise((res, rej) => {
-    setTimeout(function() {
-      app.builds().then(res).catch(rej)
-    }, 30000)
-  })
-  let status = check[0].status
-  console.log({status})
-  //t.ok(status === 'UPDATE_COMPLETE' || status === 'CREATE_COMPLETE')
   let result = await app.destroy()
-  t.pass()
-  console.log(result)
+  t.ok(result.destroyed, 'destroyed ' + result.destroyed)
 })
