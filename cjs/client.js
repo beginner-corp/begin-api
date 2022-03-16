@@ -3,12 +3,12 @@ let tiny = require('tiny-json-http')
 
 class App {
 
-  static async create ({ access_token, name, zip }) {
-    if (!name) throw ReferenceError('missing_name')
+  static async create ({ access_token, zip }) {
     if (!zip) throw ReferenceError('missing_zip')
     if (!access_token) throw ReferenceError('missing_access_token')
-    let result = await write({ access_token, params: { name, zip } })
+    let result = await write({ access_token, params: { zip } })
     if (result.errors) {
+      console.log(result.errors)
       let e = new Error('create_failed')
       e.raw = result.errors
       throw e

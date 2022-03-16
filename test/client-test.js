@@ -42,7 +42,7 @@ test('create an app', async t=> {
   let __dirname = import.meta.url.replace('file:', '').replace(__filename, '')
   let pathToMockZip = path.join(__dirname, 'arc-basic.zip')
   let zip = fs.readFileSync(pathToMockZip).toString('base64')
-  app = await App.create({ access_token, name:'my cool app', zip })
+  app = await App.create({ access_token, zip })
   t.ok(true, 'app created')
   console.log(app)
 })
