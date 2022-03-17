@@ -25,6 +25,11 @@
     "type": "git",
     "url": "git+https://github.com/beginner-corp/begin-api.git"
   },
+  "files": [
+    "cjs/*",
+    "client.d.ts",
+    "client.js"
+  ],
   "keywords": [
     "node",
     "fwa",
