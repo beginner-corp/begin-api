@@ -1,4 +1,4 @@
-> Node client for api.begin.com 
+> Node client for api.begin.com
 
 Obtain an `access_token` by creating a client at https://api.begin.com.
 
@@ -22,7 +22,6 @@ import { App } from '@begin/api'
 const { App } = require('@begin/api')
 ```
 
-# Usage
 
 ### App static methods
 
@@ -33,10 +32,13 @@ let { apps } = await App.list()
 // find an app by id
 let app = await App.find({ access_token, appID })
 
-// create a new app 
-let app = await App.create({ access_token, name, zip })
+// create a new app
+let app = await App.create({ access_token, zip })
 
+// create a new app using @begin/chunker
+let app = await App.create({ access_token, chunk, zip })
 ```
+
 
 ### App instance methods
 
@@ -48,11 +50,15 @@ let logs = await app.logs()
 let logs = await app.builds()
 
 // deploy a new version of the app
-await app.deploy({ name, zip })
+await app.deploy({ zip })
+
+// deploy a new version of the app using @begin/chunker
+await app.deploy({ chunk, zip })
 
 // destroy an app
 await app.destroy()
 ```
+
 
 ### Work with environment variables
 
@@ -65,8 +71,8 @@ await app.env.set({ key: "HENLO", value: "world" })
 
 // remove an env var
 await app.env.destroy({ key: "HENLO" })
-
 ```
+
 
 ### Work with static assets
 
@@ -80,8 +86,8 @@ await app.static.set({ name: '/file.js', body  })
 
 // remove the file
 await app.static.destroy({ name: '/file.js' })
-
 ```
+
 
 # Contributing
 

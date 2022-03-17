@@ -3,10 +3,10 @@ let tiny = require('tiny-json-http')
 
 class App {
 
-  static async create ({ access_token, zip }) {
+  static async create ({ access_token, chunk, zip }) {
     if (!zip) throw ReferenceError('missing_zip')
     if (!access_token) throw ReferenceError('missing_access_token')
-    let result = await write({ access_token, params: { zip } })
+    let result = await write({ access_token, params: { chunk, zip } })
     if (result.errors) {
       console.log(result.errors)
       let e = new Error('create_failed')
