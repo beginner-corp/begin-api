@@ -1,7 +1,11 @@
 name: Node CI
 
 # Push tests commits; pull_request tests PR merges
-on: [push, pull_request]
+on: [ push, pull_request ]
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
 
@@ -12,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 14.x ]
-        os: [ubuntu-latest] # [windows-latest, ubuntu-latest, macOS-latest]
+        os: [ ubuntu-latest ] # [windows-latest, ubuntu-latest, macOS-latest]
 
     # Go
     steps:
@@ -37,9 +41,9 @@ jobs:
       run: npm install
 
     - name: Test
-      env: 
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run: npm test
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
     - name: Notify
       uses: homoluctus/slatify@master
@@ -69,11 +73,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 14
           registry-url: https://registry.npmjs.org/
-
-      - name: Install
-        run: npm i
 
       # Publish to npm
       - name: Publish @RC to npm
