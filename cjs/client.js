@@ -220,6 +220,10 @@ async function write ({ access_token, appID, path, params }) {
     let url = `https://${base}/apps`
     if (appID) url += '/' + appID
     if (path) url += path
+    // Automatically base64-encode zip buffers
+    if (params.zip instanceof Buffer) {
+      params.zip = Buffer.from(params.zip).toString('base64')
+    }
     let result = await tiny.post({
       url,
       headers: {
