@@ -1,7 +1,7 @@
 {
   "name": "@begin/api",
   "version": "1.1.1",
-  "description": "Node client for api.begin.com",
+  "description": "Node.js client for api.begin.com",
   "type": "module",
   "module": "./client.js",
   "main": "./cjs/client.js",
@@ -15,32 +15,26 @@
     "lint": "eslint cjs/*.js",
     "test": "tape test/*-test.js | tap-spec"
   },
-  "eslintConfig": {
-    "extends": "@architect/eslint-config",
-    "rules": {
-      "fp/no-class": "off"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beginner-corp/begin-api.git"
   },
-  "files": [
-    "cjs/*",
-    "client.d.ts",
-    "client.js"
-  ],
-  "keywords": [
-    "node",
-    "fwa",
-    "begin"
-  ],
   "author": "Brian LeRoux <brian@begin.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/beginner-corp/begin-api/issues"
   },
   "homepage": "https://github.com/beginner-corp/begin-api#readme",
+  "files": [
+    "cjs/*",
+    "client.d.ts",
+    "client.js"
+  ],
+  "dependencies": {
+    "@begin/chunker": "^1.1.0",
+    "tiny-json-http": "^7.4.2",
+    "zip-dir": "^2.0.0"
+  },
   "devDependencies": {
     "@architect/eslint-config": "^2.0.1",
     "dotenv": "^16.0.0",
@@ -50,7 +44,15 @@
     "typedoc": "^0.22.13",
     "typescript": "^4.6.2"
   },
-  "dependencies": {
-    "tiny-json-http": "^7.4.2"
+  "keywords": [
+    "node",
+    "fwa",
+    "begin"
+  ],
+  "eslintConfig": {
+    "extends": "@architect/eslint-config",
+    "rules": {
+      "fp/no-class": "off"
+    }
   }
 }
