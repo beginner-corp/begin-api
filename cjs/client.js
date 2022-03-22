@@ -1,9 +1,24 @@
 // @ts-check
+let { isAbsolute } = require('path')
 let tiny = require('tiny-json-http')
+let { chunk } = require('@begin/chunker')
+let zipdir = require('zip-dir')
 
 class App {
+  constructor ({ access_token, appID, name, url, verbose }) {
+    if (!access_token) throw ReferenceError('missing_access_token')
+    if (!appID) throw ReferenceError('missing_appID')
+    if (!name) throw ReferenceError('missing_name')
+    this.access_token = access_token
+    this.appID = appID
+    this.name = name
+    this.url = url
+    this.verbose = verbose
+    this.env = new Env({ access_token, appID })
+    this.static = new Static({ access_token, appID })
+  }
 
-  static async create ({ access_token, chunk, zip }) {
+  static async create ({ access_token, chunk, zip, verbose }) {
     if (!zip) throw ReferenceError('missing_zip')
     if (!access_token) throw ReferenceError('missing_access_token')
     let result = await write({ access_token, params: { chunk, zip } })
@@ -13,38 +28,25 @@ class App {
       e.raw = result.errors
       throw e
     }
-    return new App({ access_token, ...result })
+    return new App({ access_token, verbose, ...result })
   }
 
-  static async find ({ access_token, appID }) {
+  static async find ({ access_token, appID, verbose }) {
     if (!access_token) throw ReferenceError('missing_access_token')
     if (!appID) throw ReferenceError('missing_appID')
     let record = await read({ access_token, appID })
-    return new App({ access_token, ...record })
+    return new App({ access_token, verbose, ...record })
   }
 
-  static async list ({ access_token }) {
+  static async list ({ access_token, verbose }) {
     if (!access_token) throw ReferenceError('missing_access_token')
     let { apps } = await read({ access_token })
-    return apps.map(app => new App({ access_token, ...app }))
-  }
-
-  constructor ({ access_token, appID, name, url }) {
-    if (!access_token) throw ReferenceError('missing_access_token')
-    if (!appID) throw ReferenceError('missing_appID')
-    if (!name) throw ReferenceError('missing_name')
-    this.access_token = access_token
-    this.appID = appID
-    this.name = name
-    this.url = url
-    this.env = new Env({ access_token, appID })
-    this.static = new Static({ access_token, appID })
+    return apps.map(app => new App({ access_token, verbose, ...app }))
   }
 
   //
   // instance reads
   //
-
   async builds () {
     let access_token = this.access_token
     let appID = this.appID
@@ -63,15 +65,47 @@ class App {
   //
   // instance writes
   //
-  // await app.deploy({ name, zip })
-  async deploy (params) {
-    if (!!params.name && !!params.zip)
-      throw ReferenceError('missing_name_or_zip')
-    if (params.name)
-      this.name = params.name
+  // await app.deploy({ zip || dir })
+  async deploy (params = {}) {
+    let { dir = process.cwd(), zip } = params
+    if (dir && !isAbsolute(dir))
+      throw ReferenceError('dir_must_be_absolute_path')
+
     let access_token = this.access_token
     let appID = this.appID
-    await write({ access_token, appID, params })
+    let verbose = this.verbose
+    let ts = new Date().toISOString()
+    let data
+
+    if (zip) {
+      data = zip
+    }
+    else {
+      let startZip = Date.now()
+      let filter = path => !/(node_modules)|(\.git)|([\\\/]vendor[\\\/])|(__pycache__)|(static\.json)/.test(path)
+      data = await zipdir(dir, { filter })
+      if (verbose)
+        console.error(`Archived project in ${Date.now() - startZip}ms`)
+    }
+
+    let chunks = await chunk({ data, write: false })
+    let chunkQuantity = Object.keys(chunks).length
+    let maxSize = 6 * 1000 * 1000 // 6MB
+    for (let [ chunk, zip ] of Object.entries(chunks)) {
+      let size = Buffer.from(zip).toString('base64').length
+      if (size > maxSize)
+        throw Error(`Project chunk exceeds base64-encoded size limit: ${size} (max 6MB) per request`)
+
+      await write({
+        access_token,
+        appID,
+        params: { chunk, zip, ts },
+      })
+      if (verbose) {
+        let i = Object.keys(chunks).findIndex(c => c === chunk)
+        console.error(`Uploaded project part ${i + 1} of ${chunkQuantity}`)
+      }
+    }
   }
 
   // await app.destroy()
