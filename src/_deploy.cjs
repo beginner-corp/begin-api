@@ -9,14 +9,15 @@ module.exports = async function deploy (params = {}) {
   if (dir && !isAbsolute(dir))
     throw ReferenceError('dir_must_be_absolute_path')
 
-  let access_token = this.access_token
-  let appID = this.appID
-  let verbose = this.verbose
+  let access_token = params.token
+  let appID = params.appID
+  let envID = params.envID
+  let verbose = params.verbose
   let ts = new Date().toISOString()
   let data
 
-  if (zip) {
-    data = zip
+  if (params.zip) {
+    data = params.zip
   }
   else {
     let startZip = Date.now()
@@ -37,8 +38,12 @@ module.exports = async function deploy (params = {}) {
     await write({
       access_token,
       appID,
-      params: { chunk, zip, ts },
+      envID,
+      chunk,
+      zip,
+      ts,
     })
+
     if (verbose) {
       let i = Object.keys(chunks).findIndex(c => c === chunk)
       console.error(`Uploaded project part ${i + 1} of ${chunkQuantity}`)
