@@ -2,39 +2,34 @@ import * as e from 'dotenv'
 
 e.config()
 
-import * as tiny from 'tiny-json-http'
 import path from 'path'
 import fs from 'fs'
 import test from 'tape'
 
-import { App } from '../client.js'
+import begin from '../src/index.mjs'
 
-let access_token = process.env.ACCESS_TOKEN
+let token = process.env.ACCESS_TOKEN
 let timeout = 150000 
 let app // used later 
 
 test('App', t => {
-  t.plan(4)
-  t.ok(App, 'has an app')
-  t.ok(App.list, 'has a list method')
-  t.ok(App.find, 'has a find method')
-  t.ok(App.create, 'has a create method')
-  console.log(App)
+  t.plan(1)
+  t.ok(begin, 'begin')
+  console.log(begin)
 })
 
-/*
 test('get a list of apps', async t=> {
   t.plan(1)
-  let apps = await App.list({ access_token })
+  let apps = await begin.list({ token })
   t.ok(apps.length > 0, 'has apps')
-  app = apps[0]
   console.log(apps, apps.length)
-})*/
+})
 
 //
 // working with an instance
 //
 
+/*
 test('create an app', async t=> {
   t.plan(1)
   let name = 'example app'
@@ -108,4 +103,4 @@ test('destroy the app', { timeout }, async t=> {
   t.plan(1)
   let result = await app.destroy()
   t.ok(result.destroyed, 'destroyed ' + result.destroyed)
-})
+})*/
