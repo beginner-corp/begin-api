@@ -3,16 +3,17 @@
   "version": "1.2.1",
   "description": "Node.js client for api.begin.com",
   "type": "module",
-  "module": "./client.js",
-  "main": "./cjs/client.js",
+  "module": "./src/index.mjs",
+  "main": "./src/index.cjs",
   "exports": {
-    "import": "./client.js",
-    "default": "./cjs/client.js"
+    "import": "./src/index.mjs",
+    "default": "./src/index.cjs"
   },
   "scripts": {
     "tsc": "tsc",
     "docs": "typedoc",
-    "lint": "eslint cjs/*.js",
+    "lint": "eslint src/**/*.cjs --fix",
+    "lint:esm": "eslint src/**/*.mjs",
     "test": "tape test/*-test.js | tap-spec"
   },
   "repository": {
