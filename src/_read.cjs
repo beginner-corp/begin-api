@@ -17,7 +17,12 @@ module.exports = async function read ({ token, appID }) {
     return res.body
   }
   catch (e) {
-    const errors = e.body.errors
-    throw Error(errors[errors.length - 1])
+    if (e.body && e.body.errors) {
+      const errors = e.body.errors
+      throw Error(errors[errors.length - 1])
+    }
+    else {
+      throw e
+    }
   }
 }

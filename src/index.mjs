@@ -1,1 +1,2 @@
-export * from './index.cjs'
+import begin from './index.cjs'
+export default begin
