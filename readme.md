@@ -1,6 +1,6 @@
 > Node client for api.begin.com
 
-Obtain an `access_token` by creating a client at https://api.begin.com.
+Obtain an `token` by creating a client at https://api.begin.com.
 
 # Install
 
