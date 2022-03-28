@@ -4,6 +4,7 @@ let { chunk } = require('@begin/chunker')
 let zipdir = require('zip-dir')
 
 module.exports = async function deploy (params = {}) {
+
   let { dir = process.cwd(), zip } = params
   if (dir && !isAbsolute(dir))
     throw ReferenceError('dir_must_be_absolute_path')

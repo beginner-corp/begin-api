@@ -1,5 +1,6 @@
 let read = require('./_read.cjs')
 let write  = require('./_write.cjs')
+let deploy = require('./_deploy.cjs')
 
 /** example api client */
 module.exports = {
@@ -46,8 +47,8 @@ module.exports = {
     },
 
     /** deploy code to environment */
-    async deploy (/* { token, appID, envID, chunk, zip }*/) {
-      throw Error('not_implemented')
+    async deploy ({ token, appID, envID, dir, zip }) {
+      return deploy({ token, appID, envID, dir, zip })
     },
 
     /* read environment runtime logs */
