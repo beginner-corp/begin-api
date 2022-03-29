@@ -27,9 +27,7 @@
   },
   "homepage": "https://github.com/beginner-corp/begin-api#readme",
   "files": [
-    "cjs/*",
-    "client.d.ts",
-    "client.js"
+    "src/*"
   ],
   "dependencies": {
     "@begin/chunker": "^1.1.2",
