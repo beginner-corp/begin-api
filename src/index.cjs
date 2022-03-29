@@ -47,8 +47,8 @@ module.exports = {
     },
 
     /** deploy code to environment */
-    async deploy ({ token, appID, envID, dir, zip }) {
-      return deploy({ token, appID, envID, dir, zip })
+    async deploy ({ token, appID, envID, dir, zip, verbose }) {
+      return deploy({ token, appID, envID, dir, zip, verbose })
     },
 
     /* read environment runtime logs */

@@ -9,6 +9,9 @@
     "import": "./src/index.mjs",
     "default": "./src/index.cjs"
   },
+  "files": [
+    "src/*"
+  ],
   "scripts": {
     "tsc": "tsc",
     "docs": "typedoc",
@@ -26,9 +29,6 @@
     "url": "https://github.com/beginner-corp/begin-api/issues"
   },
   "homepage": "https://github.com/beginner-corp/begin-api#readme",
-  "files": [
-    "src/*"
-  ],
   "dependencies": {
     "@begin/chunker": "^1.1.2",
     "tiny-json-http": "^7.4.2",
@@ -49,9 +49,6 @@
     "begin"
   ],
   "eslintConfig": {
-    "extends": "@architect/eslint-config",
-    "rules": {
-      "fp/no-class": "off"
-    }
+    "extends": "@architect/eslint-config"
   }
 }
