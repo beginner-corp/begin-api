@@ -3,6 +3,7 @@ let getBase = require('./_get-base.cjs')
 
 module.exports = async function read ({ token, appID }) {
   let base = await getBase()
+  if (process.env.__BEGIN_TEST_URL__) token = 'token_redacted'
   if (!token) throw Error('missing_token')
   let url = `${base}/apps`
   if (appID) url += `/${appID}`
