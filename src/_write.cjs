@@ -3,7 +3,8 @@ let getBase = require('./_get-base.cjs')
 
 module.exports = async function write (params) {
   const base = await getBase()
-  const token = params.token
+  let token = params.token
+  if (process.env.__BEGIN_TEST_URL__) token = 'token_redacted'
   if (!token) throw Error('missing_token')
   delete params.token
 
