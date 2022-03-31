@@ -1,4 +1,5 @@
 module.exports = async function getBase () {
-  let isProd = process.env.NODE_ENV === 'production'
+  let { ARC_ENV, NODE_ENV } = process.env
+  let isProd = [ ARC_ENV, NODE_ENV ].includes('production')
   return `https://${isProd ? 'api' : 'staging-api'}.begin.com/v1`
 }
