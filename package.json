@@ -1,6 +1,6 @@
 {
   "name": "@begin/api",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "Node.js client for api.begin.com",
   "type": "module",
   "module": "./src/index.mjs",
