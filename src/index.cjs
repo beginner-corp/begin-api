@@ -58,7 +58,7 @@ module.exports = {
 
     /** read a single build */
     async build ({ token, appID, envID, buildID }) {
-      return read({ token, appID, envID, buildID, path: '/builds/' + buildID })
+      return read({ token, appID, envID, path: '/builds/' + buildID })
     },
 
     /** read build logs */
