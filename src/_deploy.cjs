@@ -34,23 +34,28 @@ module.exports = async function deploy (params = {}) {
     let plural = chunkQuantity > 1 ? 's' : ''
     console.error(`Uploading project in ${chunkQuantity} part${plural}`)
   }
+
+  let build
   for (let [ chunk, zip ] of Object.entries(chunks)) {
-    let size = Buffer.from(zip).toString('base64').length
+    let stringified = Buffer.from(zip).toString('base64')
+    let size = stringified.length
     if (size > maxSize)
       throw Error(`Project chunk exceeds base64-encoded size limit: ${size} (max 6MB) per request`)
 
-    await write({
+    let result = await write({
       token,
       appID,
       envID,
       chunk,
-      zip,
+      zip: stringified,
       ts,
     })
+    if (!build) build = result
 
     if (verbose) {
       let i = Object.keys(chunks).findIndex(c => c === chunk)
       console.error(`Uploaded project part ${i + 1} of ${chunkQuantity}`)
     }
   }
+  return build
 }
